@@ -7,9 +7,11 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using SmartPanTask.Models;
+using Microsoft.AspNet.Identity;
 
 namespace SmartPanTask.Controllers
 {
+    [Authorize(Roles = "ManagerRole")]
     public class EmployeeTasksController : Controller
     {
         private SmartPanEntities db = new SmartPanEntities();
@@ -17,29 +19,19 @@ namespace SmartPanTask.Controllers
         // GET: EmployeeTasks
         public ActionResult Index()
         {
-            var employeeTasks = db.EmployeeTasks.Include(e => e.Employee);
+            var userid = User.Identity.GetUserId();
+            var managerid = db.Employees.Where(a => a.UserId == userid).FirstOrDefault().Id;
+            var employeeTasks = db.EmployeeTasks.Include(e => e.Employee).Where(a=>a.Employee.ManagerID == managerid && a.Employee.Type == "Employee");
             return View(employeeTasks.ToList());
         }
 
-        // GET: EmployeeTasks/Details/5
-        public ActionResult Details(int? id)
-        {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            EmployeeTask employeeTask = db.EmployeeTasks.Find(id);
-            if (employeeTask == null)
-            {
-                return HttpNotFound();
-            }
-            return View(employeeTask);
-        }
 
         // GET: EmployeeTasks/Create
         public ActionResult Create()
         {
-            ViewBag.EmployeeID = db.Employees.Where(a => a.Type == "Employee").ToList();
+            var userid = User.Identity.GetUserId();
+            var managerid = db.Employees.Where(a => a.UserId == userid).FirstOrDefault().Id;
+            ViewBag.EmployeeID = db.Employees.Where(a => a.Type == "Employee" && a.ManagerID == managerid).ToList();
             //ViewBag.EmployeeID = new SelectList(db.Employees.Where(a=>a.Type == "Employee"), "Id", "FirstName");
             return View();
         }
@@ -53,6 +45,7 @@ namespace SmartPanTask.Controllers
         {
             if (ModelState.IsValid)
             {
+                employeeTask.DateAssigned = DateTime.Now;
                 db.EmployeeTasks.Add(employeeTask);
                 db.SaveChanges();
                 return RedirectToAction("Index");

@@ -96,15 +96,9 @@
           <Property Name="TaskDescription" Type="nvarchar(max)" />
           <Property Name="EmployeeID" Type="int" />
           <Property Name="DateAssigned" Type="datetime" />
-        </EntityType>
-        <EntityType Name="EmployeeTaskStatus">
-          <Key>
-            <PropertyRef Name="Id" />
-          </Key>
-          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="TaskStatus" Type="nvarchar(max)" />
-          <Property Name="TaskID" Type="int" />
           <Property Name="DateUpdated" Type="datetime" />
+          <Property Name="DateStarted" Type="datetime" />
         </EntityType>
         <EntityType Name="sysdiagrams">
           <Key>
@@ -198,18 +192,6 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_Employee_Employee">
-          <End Role="Employee" Type="Self.Employee" Multiplicity="0..1" />
-          <End Role="Employee1" Type="Self.Employee" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Employee">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="Employee1">
-              <PropertyRef Name="ManagerID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_Tasks_Employee">
           <End Role="Employee" Type="Self.Employee" Multiplicity="0..1">
             <OnDelete Action="Cascade" />
@@ -221,20 +203,6 @@
             </Principal>
             <Dependent Role="EmployeeTasks">
               <PropertyRef Name="EmployeeID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_TaskStatus_Tasks">
-          <End Role="EmployeeTasks" Type="Self.EmployeeTasks" Multiplicity="0..1">
-            <OnDelete Action="Cascade" />
-          </End>
-          <End Role="EmployeeTaskStatus" Type="Self.EmployeeTaskStatus" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="EmployeeTasks">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="EmployeeTaskStatus">
-              <PropertyRef Name="TaskID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -279,7 +247,6 @@
           <EntitySet Name="Department" EntityType="Self.Department" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Employee" EntityType="Self.Employee" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="EmployeeTasks" EntityType="Self.EmployeeTasks" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="EmployeeTaskStatus" EntityType="Self.EmployeeTaskStatus" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
           <AssociationSet Name="FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId" Association="Self.FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId">
             <End Role="AspNetUsers" EntitySet="AspNetUsers" />
@@ -305,17 +272,9 @@
             <End Role="Department" EntitySet="Department" />
             <End Role="Employee" EntitySet="Employee" />
           </AssociationSet>
-          <AssociationSet Name="FK_Employee_Employee" Association="Self.FK_Employee_Employee">
-            <End Role="Employee" EntitySet="Employee" />
-            <End Role="Employee1" EntitySet="Employee" />
-          </AssociationSet>
           <AssociationSet Name="FK_Tasks_Employee" Association="Self.FK_Tasks_Employee">
             <End Role="Employee" EntitySet="Employee" />
             <End Role="EmployeeTasks" EntitySet="EmployeeTasks" />
-          </AssociationSet>
-          <AssociationSet Name="FK_TaskStatus_Tasks" Association="Self.FK_TaskStatus_Tasks">
-            <End Role="EmployeeTasks" EntitySet="EmployeeTasks" />
-            <End Role="EmployeeTaskStatus" EntitySet="EmployeeTaskStatus" />
           </AssociationSet>
         </EntityContainer>
       </Schema>
@@ -406,8 +365,6 @@
           <Property Name="Type" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="AspNetUser" Relationship="Self.FK_Employee_AspNetUsers" FromRole="Employee" ToRole="AspNetUsers" />
           <NavigationProperty Name="Department" Relationship="Self.FK_Employee_Department" FromRole="Employee" ToRole="Department" />
-          <NavigationProperty Name="Employee1" Relationship="Self.FK_Employee_Employee" FromRole="Employee" ToRole="Employee1" />
-          <NavigationProperty Name="Employee2" Relationship="Self.FK_Employee_Employee" FromRole="Employee1" ToRole="Employee" />
           <NavigationProperty Name="EmployeeTasks" Relationship="Self.FK_Tasks_Employee" FromRole="Employee" ToRole="EmployeeTasks" />
         </EntityType>
         <EntityType Name="EmployeeTask">
@@ -419,18 +376,10 @@
           <Property Name="TaskDescription" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="EmployeeID" Type="Int32" />
           <Property Name="DateAssigned" Type="DateTime" Precision="3" />
-          <NavigationProperty Name="Employee" Relationship="Self.FK_Tasks_Employee" FromRole="EmployeeTasks" ToRole="Employee" />
-          <NavigationProperty Name="EmployeeTaskStatus" Relationship="Self.FK_TaskStatus_Tasks" FromRole="EmployeeTasks" ToRole="EmployeeTaskStatus" />
-        </EntityType>
-        <EntityType Name="EmployeeTaskStatu">
-          <Key>
-            <PropertyRef Name="Id" />
-          </Key>
-          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="TaskStatus" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="TaskID" Type="Int32" />
           <Property Name="DateUpdated" Type="DateTime" Precision="3" />
-          <NavigationProperty Name="EmployeeTask" Relationship="Self.FK_TaskStatus_Tasks" FromRole="EmployeeTaskStatus" ToRole="EmployeeTasks" />
+          <Property Name="DateStarted" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="Employee" Relationship="Self.FK_Tasks_Employee" FromRole="EmployeeTasks" ToRole="Employee" />
         </EntityType>
         <EntityType Name="sysdiagram">
           <Key>
@@ -496,18 +445,6 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_Employee_Employee">
-          <End Role="Employee" Type="Self.Employee" Multiplicity="0..1" />
-          <End Role="Employee1" Type="Self.Employee" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Employee">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="Employee1">
-              <PropertyRef Name="ManagerID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_Tasks_Employee">
           <End Role="Employee" Type="Self.Employee" Multiplicity="0..1">
             <OnDelete Action="Cascade" />
@@ -519,20 +456,6 @@
             </Principal>
             <Dependent Role="EmployeeTasks">
               <PropertyRef Name="EmployeeID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_TaskStatus_Tasks">
-          <End Role="EmployeeTasks" Type="Self.EmployeeTask" Multiplicity="0..1">
-            <OnDelete Action="Cascade" />
-          </End>
-          <End Role="EmployeeTaskStatus" Type="Self.EmployeeTaskStatu" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="EmployeeTasks">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="EmployeeTaskStatus">
-              <PropertyRef Name="TaskID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -549,7 +472,6 @@
           <EntitySet Name="Departments" EntityType="Self.Department" />
           <EntitySet Name="Employees" EntityType="Self.Employee" />
           <EntitySet Name="EmployeeTasks" EntityType="Self.EmployeeTask" />
-          <EntitySet Name="EmployeeTaskStatus" EntityType="Self.EmployeeTaskStatu" />
           <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagram" />
           <AssociationSet Name="FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId" Association="Self.FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId">
             <End Role="AspNetUsers" EntitySet="AspNetUsers" />
@@ -567,17 +489,9 @@
             <End Role="Department" EntitySet="Departments" />
             <End Role="Employee" EntitySet="Employees" />
           </AssociationSet>
-          <AssociationSet Name="FK_Employee_Employee" Association="Self.FK_Employee_Employee">
-            <End Role="Employee" EntitySet="Employees" />
-            <End Role="Employee1" EntitySet="Employees" />
-          </AssociationSet>
           <AssociationSet Name="FK_Tasks_Employee" Association="Self.FK_Tasks_Employee">
             <End Role="Employee" EntitySet="Employees" />
             <End Role="EmployeeTasks" EntitySet="EmployeeTasks" />
-          </AssociationSet>
-          <AssociationSet Name="FK_TaskStatus_Tasks" Association="Self.FK_TaskStatus_Tasks">
-            <End Role="EmployeeTasks" EntitySet="EmployeeTasks" />
-            <End Role="EmployeeTaskStatus" EntitySet="EmployeeTaskStatus" />
           </AssociationSet>
           <AssociationSet Name="AspNetUserRoles" Association="Self.AspNetUserRoles">
             <End Role="AspNetRoles" EntitySet="AspNetRoles" />
@@ -717,16 +631,9 @@
                 <ScalarProperty Name="TaskDescription" ColumnName="TaskDescription" />
                 <ScalarProperty Name="EmployeeID" ColumnName="EmployeeID" />
                 <ScalarProperty Name="DateAssigned" ColumnName="DateAssigned" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="EmployeeTaskStatus">
-            <EntityTypeMapping TypeName="SmartPanModel.EmployeeTaskStatu">
-              <MappingFragment StoreEntitySet="EmployeeTaskStatus">
-                <ScalarProperty Name="Id" ColumnName="Id" />
                 <ScalarProperty Name="TaskStatus" ColumnName="TaskStatus" />
-                <ScalarProperty Name="TaskID" ColumnName="TaskID" />
                 <ScalarProperty Name="DateUpdated" ColumnName="DateUpdated" />
+                <ScalarProperty Name="DateStarted" ColumnName="DateStarted" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

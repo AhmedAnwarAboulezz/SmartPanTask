@@ -21,13 +21,13 @@ namespace SmartPanTask.Controllers
         // GET: Employees
         public ActionResult Index()
         {
-            var employees = db.Employees.ToList();
+            var employers = db.Employees.ToList();
             var userid = User.Identity.GetUserId();
             if (User.IsInRole("AdminRole"))
             {
                 List<string> ManagerName = new List<string>();
-                employees = db.Employees.Include(e => e.AspNetUser).Include(e => e.Department).Where(a => a.Type == "Employee").ToList();
-                foreach (var item in employees)
+                employers = db.Employees.Include(e => e.AspNetUser).Include(e => e.Department).Where(a => a.Type == "Employee").ToList();
+                foreach (var item in employers)
                 {
                     var managerFirst = db.Employees.Where(a => a.Id == item.ManagerID).FirstOrDefault().FirstName;
                     var managerLast = db.Employees.Where(a => a.Id == item.ManagerID).FirstOrDefault().LastName;
@@ -40,8 +40,8 @@ namespace SmartPanTask.Controllers
             {
                 List<string> ManagerName = new List<string>();
                 var managerid = db.Employees.Where(a => a.UserId == userid).FirstOrDefault().Id;
-                employees = db.Employees.Where(a => a.Type == "Employee" && a.ManagerID == managerid).ToList();
-                foreach (var item in employees)
+                employers = db.Employees.Where(a => a.Type == "Employee" && a.ManagerID == managerid).ToList();
+                foreach (var item in employers)
                 {
                     var managerFirst = db.Employees.Where(a => a.Id == item.ManagerID).FirstOrDefault().FirstName;
                     var managerLast = db.Employees.Where(a => a.Id == item.ManagerID).FirstOrDefault().LastName;
@@ -51,10 +51,10 @@ namespace SmartPanTask.Controllers
                 ViewBag.managername = ManagerName;
             }
            
-            return View(employees);
+            return View(employers);
         }
 
-        // GET: Employees/Details/5
+        // GET: employers/Details/5
         public ActionResult Details(int? id)
         {
             if (id == null)

@@ -14,20 +14,15 @@ namespace SmartPanTask.Models
     
     public partial class EmployeeTask
     {
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public EmployeeTask()
-        {
-            this.EmployeeTaskStatus = new HashSet<EmployeeTaskStatu>();
-        }
-    
         public int Id { get; set; }
         public string TaskTitle { get; set; }
         public string TaskDescription { get; set; }
         public Nullable<int> EmployeeID { get; set; }
         public Nullable<System.DateTime> DateAssigned { get; set; }
+        public string TaskStatus { get; set; }
+        public Nullable<System.DateTime> DateUpdated { get; set; }
+        public Nullable<System.DateTime> DateStarted { get; set; }
     
         public virtual Employee Employee { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<EmployeeTaskStatu> EmployeeTaskStatus { get; set; }
     }
 }

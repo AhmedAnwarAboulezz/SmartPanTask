@@ -17,7 +17,6 @@ namespace SmartPanTask.Models
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public Employee()
         {
-            this.Employee1 = new HashSet<Employee>();
             this.EmployeeTasks = new HashSet<EmployeeTask>();
         }
     
@@ -33,9 +32,6 @@ namespace SmartPanTask.Models
     
         public virtual AspNetUser AspNetUser { get; set; }
         public virtual Department Department { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Employee> Employee1 { get; set; }
-        public virtual Employee Employee2 { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<EmployeeTask> EmployeeTasks { get; set; }
     }

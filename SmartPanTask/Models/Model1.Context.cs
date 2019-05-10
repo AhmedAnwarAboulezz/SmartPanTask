@@ -35,7 +35,6 @@ namespace SmartPanTask.Models
         public virtual DbSet<Department> Departments { get; set; }
         public virtual DbSet<Employee> Employees { get; set; }
         public virtual DbSet<EmployeeTask> EmployeeTasks { get; set; }
-        public virtual DbSet<EmployeeTaskStatu> EmployeeTaskStatus { get; set; }
         public virtual DbSet<sysdiagram> sysdiagrams { get; set; }
     
         public virtual int sp_alterdiagram(string diagramname, Nullable<int> owner_id, Nullable<int> version, byte[] definition)

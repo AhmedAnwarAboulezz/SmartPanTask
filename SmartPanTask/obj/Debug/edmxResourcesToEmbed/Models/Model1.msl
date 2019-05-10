@@ -87,16 +87,9 @@
           <ScalarProperty Name="TaskDescription" ColumnName="TaskDescription" />
           <ScalarProperty Name="EmployeeID" ColumnName="EmployeeID" />
           <ScalarProperty Name="DateAssigned" ColumnName="DateAssigned" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
-    <EntitySetMapping Name="EmployeeTaskStatus">
-      <EntityTypeMapping TypeName="SmartPanModel.EmployeeTaskStatu">
-        <MappingFragment StoreEntitySet="EmployeeTaskStatus">
-          <ScalarProperty Name="Id" ColumnName="Id" />
           <ScalarProperty Name="TaskStatus" ColumnName="TaskStatus" />
-          <ScalarProperty Name="TaskID" ColumnName="TaskID" />
           <ScalarProperty Name="DateUpdated" ColumnName="DateUpdated" />
+          <ScalarProperty Name="DateStarted" ColumnName="DateStarted" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
