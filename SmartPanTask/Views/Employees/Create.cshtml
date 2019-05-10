@@ -108,6 +108,7 @@
        function ChooseEmp(x) {
            if (x == "Manager") {
                $("#ManagerID").removeAttr('required');
+               $("#ManagerID").val("");
                $(".chooseManager").hide();
            }
            else {
@@ -121,6 +122,6 @@
 @if(TempData["Failed"] == "You are already register before for this form.")
 {
     <script>
-        alert("You are already register before for this form <br> Please Register as a new user")
+        alert("You are already register before for this form , Please Register as a new user")
     </script>
 }

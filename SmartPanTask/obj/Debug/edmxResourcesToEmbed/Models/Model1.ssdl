@@ -60,7 +60,6 @@
     <Property Name="LockoutEnabled" Type="bit" Nullable="false" />
     <Property Name="AccessFailedCount" Type="int" Nullable="false" />
     <Property Name="UserName" Type="nvarchar" MaxLength="256" Nullable="false" />
-    <Property Name="Type" Type="nvarchar(max)" />
   </EntityType>
   <EntityType Name="Department">
     <Key>
@@ -68,7 +67,6 @@
     </Key>
     <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
     <Property Name="DepartmentName" Type="nvarchar(max)" />
-    <Property Name="EmployeeID" Type="int" />
   </EntityType>
   <EntityType Name="Employee">
     <Key>

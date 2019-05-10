@@ -21,17 +21,36 @@ namespace SmartPanTask.Controllers
         // GET: Employees
         public ActionResult Index()
         {
-            List<string> ManagerName = new List<string>();
-            var employees = db.Employees.Include(e => e.AspNetUser).Include(e => e.Department).Where(a=>a.Type == "Employee").ToList();
-            foreach(var item in employees)
+            var employees = db.Employees.ToList();
+            var userid = User.Identity.GetUserId();
+            if (User.IsInRole("AdminRole"))
             {
-                var managerFirst = db.Employees.Where(a => a.Id == item.ManagerID).FirstOrDefault().FirstName;
-                var managerLast = db.Employees.Where(a => a.Id == item.ManagerID).FirstOrDefault().LastName;
-
-                string Totalname = managerFirst + " " + managerLast;
-                ManagerName.Add(Totalname);
+                List<string> ManagerName = new List<string>();
+                employees = db.Employees.Include(e => e.AspNetUser).Include(e => e.Department).Where(a => a.Type == "Employee").ToList();
+                foreach (var item in employees)
+                {
+                    var managerFirst = db.Employees.Where(a => a.Id == item.ManagerID).FirstOrDefault().FirstName;
+                    var managerLast = db.Employees.Where(a => a.Id == item.ManagerID).FirstOrDefault().LastName;
+                    string Totalname = managerFirst + " " + managerLast;
+                    ManagerName.Add(Totalname);
+                }
+                ViewBag.managername = ManagerName;
             }
-            ViewBag.managername = ManagerName;
+            else
+            {
+                List<string> ManagerName = new List<string>();
+                var managerid = db.Employees.Where(a => a.UserId == userid).FirstOrDefault().Id;
+                employees = db.Employees.Where(a => a.Type == "Employee" && a.ManagerID == managerid).ToList();
+                foreach (var item in employees)
+                {
+                    var managerFirst = db.Employees.Where(a => a.Id == item.ManagerID).FirstOrDefault().FirstName;
+                    var managerLast = db.Employees.Where(a => a.Id == item.ManagerID).FirstOrDefault().LastName;
+                    string Totalname = managerFirst + " " + managerLast;
+                    ManagerName.Add(Totalname);
+                }
+                ViewBag.managername = ManagerName;
+            }
+           
             return View(employees);
         }
 
@@ -49,7 +68,7 @@ namespace SmartPanTask.Controllers
             }
             return View(employee);
         }
-
+        [Authorize]
         // GET: Employees/Create
         public ActionResult Create()
         {
