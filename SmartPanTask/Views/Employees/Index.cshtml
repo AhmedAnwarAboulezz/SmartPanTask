@@ -28,9 +28,6 @@
             @Html.DisplayNameFor(model => model.ManagerID)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Type)
-        </th>
-        <th>
             @Html.DisplayNameFor(model => model.AspNetUser.Email)
         </th>
         <th>
@@ -38,7 +35,9 @@
         </th>
         <th></th>
     </tr>
-
+    @{ 
+        var counter = 0;
+    }
 @foreach (var item in Model) {
     <tr>
         <td>
@@ -51,13 +50,10 @@
             @Html.DisplayFor(modelItem => item.Salary)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.Image)
+            <img class="thumbnail text-center" width="200" height="100" src="~/@item.Image" />
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.ManagerID)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Type)
+            @ViewBag.managername[counter]
         </td>
         <td>
             @Html.DisplayFor(modelItem => item.AspNetUser.Email)
@@ -71,6 +67,14 @@
             @Html.ActionLink("Delete", "Delete", new { id=item.Id })
         </td>
     </tr>
+    counter++;
 }
 
 </table>
+
+@if (TempData["Failed"] == "You are an admin, couldn't apply this form")
+{
+    <script>
+        alert("You are an admin, couldn't apply this form <br> Please Register as a new user")
+    </script>
+}

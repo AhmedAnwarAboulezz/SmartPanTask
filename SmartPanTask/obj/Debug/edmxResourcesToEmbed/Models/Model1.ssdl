@@ -60,6 +60,7 @@
     <Property Name="LockoutEnabled" Type="bit" Nullable="false" />
     <Property Name="AccessFailedCount" Type="int" Nullable="false" />
     <Property Name="UserName" Type="nvarchar" MaxLength="256" Nullable="false" />
+    <Property Name="Type" Type="nvarchar(max)" />
   </EntityType>
   <EntityType Name="Department">
     <Key>
@@ -194,6 +195,18 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
+  <Association Name="FK_Employee_Employee">
+    <End Role="Employee" Type="Self.Employee" Multiplicity="0..1" />
+    <End Role="Employee1" Type="Self.Employee" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Employee">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Employee1">
+        <PropertyRef Name="ManagerID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
   <Association Name="FK_Tasks_Employee">
     <End Role="Employee" Type="Self.Employee" Multiplicity="0..1">
       <OnDelete Action="Cascade" />
@@ -288,6 +301,10 @@
     <AssociationSet Name="FK_Employee_Department" Association="Self.FK_Employee_Department">
       <End Role="Department" EntitySet="Department" />
       <End Role="Employee" EntitySet="Employee" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Employee_Employee" Association="Self.FK_Employee_Employee">
+      <End Role="Employee" EntitySet="Employee" />
+      <End Role="Employee1" EntitySet="Employee" />
     </AssociationSet>
     <AssociationSet Name="FK_Tasks_Employee" Association="Self.FK_Tasks_Employee">
       <End Role="Employee" EntitySet="Employee" />

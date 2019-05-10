@@ -23,12 +23,13 @@ namespace SmartPanTask.Models
         [Required(ErrorMessage = "Please enter your Last name")]
         public string LastName { get; set; }
         [Required(ErrorMessage = "Please enter your salary")]
+        [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:c}")]
         public Nullable<decimal> Salary { get; set; }
+        [DisplayName("Profile Photo")]
+        [Required(ErrorMessage = "Please Load an image")]
         public string Image { get; set; }
+        [DisplayName("Manager Name")]
         public Nullable<int> ManagerID { get; set; }
-        public Nullable<int> DepartmentID { get; set; }
-        public string UserId { get; set; }
-        public string Type { get; set; }
     }
 
 }

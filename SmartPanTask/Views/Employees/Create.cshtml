@@ -8,7 +8,7 @@
 <h2>Create</h2>
 
 
-@using (Html.BeginForm()) 
+@using (Html.BeginForm("Create", "Employees", FormMethod.Post, new { enctype = "multipart/form-data" }))
 {
     @Html.AntiForgeryToken()
     
@@ -43,42 +43,52 @@
         <div class="form-group">
             @Html.LabelFor(model => model.Image, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.EditorFor(model => model.Image, new { htmlAttributes = new { @class = "form-control" } })
+                <input type="file" name="Image" id="Image" class="form-control" required />
+                @*@Html.EditorFor(model => model.Image, new { htmlAttributes = new { @class = "form-control" } })*@
                 @Html.ValidationMessageFor(model => model.Image, "", new { @class = "text-danger" })
             </div>
         </div>
-
         <div class="form-group">
+            <label class="control-label col-md-2">Choose Type</label>
+            <div class="col-md-10">
+                <select name="Type" id="Type" class="form-control" onchange="ChooseEmp(this.value)" required>
+                    <option value="Employee">Employee</option>
+                    <option value="Manager">Manager</option>
+                </select>
+                @Html.ValidationMessageFor(model => model.Type, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group chooseManager">
             @Html.LabelFor(model => model.ManagerID, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.EditorFor(model => model.ManagerID, new { htmlAttributes = new { @class = "form-control" } })
+                <select name="ManagerID" id="ManagerID" class="form-control"  required>
+                    <option value="">--Please choose a manager--</option>
+                    @foreach (var item in ViewBag.managername)
+                    {
+                        <option value="@item.Id">@item.FirstName @item.LastName</option>
+                    }
+                </select>
+
                 @Html.ValidationMessageFor(model => model.ManagerID, "", new { @class = "text-danger" })
             </div>
         </div>
 
         <div class="form-group">
-            @Html.LabelFor(model => model.DepartmentID, "DepartmentID", htmlAttributes: new { @class = "control-label col-md-2" })
+            @Html.LabelFor(model => model.DepartmentID, "Department Name", htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
                 @Html.DropDownList("DepartmentID", null, htmlAttributes: new { @class = "form-control" })
                 @Html.ValidationMessageFor(model => model.DepartmentID, "", new { @class = "text-danger" })
             </div>
         </div>
 
-        <div class="form-group">
+        @*<div class="form-group">
             @Html.LabelFor(model => model.UserId, "UserId", htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
                 @Html.DropDownList("UserId", null, htmlAttributes: new { @class = "form-control" })
                 @Html.ValidationMessageFor(model => model.UserId, "", new { @class = "text-danger" })
             </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.Type, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.Type, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.Type, "", new { @class = "text-danger" })
-            </div>
-        </div>
+        </div>*@
 
         <div class="form-group">
             <div class="col-md-offset-2 col-md-10">
@@ -94,4 +104,23 @@
 
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")
+   <script>
+       function ChooseEmp(x) {
+           if (x == "Manager") {
+               $("#ManagerID").removeAttr('required');
+               $(".chooseManager").hide();
+           }
+           else {
+               $(".chooseManager").show();
+               $("#ManagerID").attr('required', 'required');
+           }
+       }
+    </script>
+}
+
+@if(TempData["Failed"] == "You are already register before for this form.")
+{
+    <script>
+        alert("You are already register before for this form <br> Please Register as a new user")
+    </script>
 }
