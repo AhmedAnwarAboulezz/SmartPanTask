@@ -6,7 +6,6 @@
     <title>@ViewBag.Title</title>
     @Scripts.Render("~/bundles/modernizr")
     <script src="~/Content/Admin/js/jquery-2.1.1.js"></script>
-    @*<script src="~/Scripts/selectize.js"></script>*@
     <link href="~/Content/Admin/css/bootstrap.min.css" rel="stylesheet">
     <link href="~/Content/Admin/font-awesome/css/font-awesome.css" rel="stylesheet">
 
@@ -18,7 +17,6 @@
 
     <link href="~/Content/Admin/css/animate.css" rel="stylesheet">
     <link href="~/Content/Admin/css/style.css" rel="stylesheet">
-    @*<link rel="stylesheet" href="~/Content/assets/css/selectize.css">*@
     <style>
         .no-sort::after {
             display: none !important;
@@ -46,19 +44,8 @@
     <script src="https://cdn.datatables.net/buttons/1.5.1/js/buttons.html5.min.js"></script>
     <script src="https://cdn.datatables.net/buttons/1.0.3/js/buttons.print.min.js"></script>
     <script src="https://cdn.datatables.net/colreorder/1.4.1/js/dataTables.colReorder.min.js"></script>
-    @*<link href="~/Content/footable.core.css" rel="stylesheet" />
 
-        <!-- jQuery -->
-        <script src="~/Scripts/selectize.js"></script>
-        @*<script src="~/Scripts/footable.js" type="text/javascript"></script>
-            <script src="~/Scripts/footable.filter.js" type="text/javascript"></script>
-            <script src="~/Scripts/footable.sort.js" type="text/javascript"></script>
-
-            <script src="~/Scripts/excellentexport.min.js" type="text/javascript"></script>*@
-
-    <!--[if lt IE 9]><script src="https://cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv.js"></script><![endif]-->
-    <!--[if lt IE 9]><script src="js/respond.js"></script><![endif]-->
-    @*<link href="http://fonts.googleapis.com/earlyaccess/droidarabickufi.css" rel="stylesheet">*@
+   
     <style type="text/css">
         input, select, textarea {
             max-width: 100%;
@@ -283,18 +270,18 @@
                         @if (User.IsInRole("EmployeeRole"))
                         {
                             <li>
-                                <a href="~/News/Index"><i class="fa fa-home"></i> <span class="nav-label">My Tasks</span></a>
+                                <a href="~/MyTasks/Index"><i class="fa fa-tasks"></i> <span class="nav-label">My Tasks</span></a>
 
                             </li>
                         }
                         @if (User.IsInRole("AdminRole"))
                         {
                             <li>
-                                <a href="~/News/Index"><i class="fa fa-home"></i> <span class="nav-label">Manager News</span></a>
+                                <a href="~/Departments/Index"><i class="fa fa-building"></i> <span class="nav-label">Departments</span></a>
 
                             </li>
                             <li>
-                                <a href="~/News/Index"><i class="fa fa-home"></i> <span class="nav-label">Manager News</span></a>
+                                <a href="~/Employees/Index"><i class="fa fa-list"></i> <span class="nav-label">Employee List</span></a>
 
                             </li>
                         }
@@ -321,9 +308,9 @@
                                 <a href="javascript:document.getElementById('logoutForm').submit()" class="btn btn-primary loginbtn">Logout</a>
                             }
                         </section>
-                        <section class="Reslanglogin">
+                        @*<section class="Reslanglogin">
                             <a href="~/VisitorMessages" class="btn btn-primary btn-circle">M</a>
-                        </section>
+                        </section>*@
 
 
                     </nav>
@@ -348,11 +335,8 @@
 
         </div>
     </div>
-    <!-- footer section start-->
-    @RenderSection("scripts", required: false)
 
-    @*<script src="~/Scripts/html5-qrcode.js"></script>*@
-    @*<script src="~/Scripts/printThis.js"></script>*@
+
 
 
     <!-- Mainly scripts -->
@@ -386,6 +370,14 @@
 
     <!-- Sparkline demo data  -->
     <script src="~/Content/Admin/js/demo/sparkline-demo.js"></script>
+
+    <!--Toastr and confirmation-->
+    <link rel="stylesheet" href="~/Scripts/toastr/toastr.css" />
+    <script src="~/Scripts/toastr/toastr.min.js"></script>
+    <link rel="stylesheet" href="~/Scripts/toastr/jquery-confirm.css" />
+    <script src="~/Scripts/toastr/jquery-confirm.js"></script>
+    @RenderSection("scripts", required: false)
+
     <script>
         $(function () {
 
@@ -425,15 +417,6 @@
         CKEDITOR.replace("FullDescriptionAr");
     </script>
 
-
-
-
-
-
-
-
-    <!-- Toastr -->
-    <script src="~/Content/Admin/js/plugins/toastr/toastr.min.js"></script>
 </body>
 
 </html>

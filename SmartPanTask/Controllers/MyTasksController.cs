@@ -85,6 +85,36 @@ namespace SmartPanTask.Controllers
             return RedirectToAction("Index");
         }
 
+        public ActionResult StartTask(int TaskId)
+        {
+
+            if (TaskId != null)
+            {
+                EmployeeTask EmpTask = db.EmployeeTasks.Find(TaskId);
+                EmpTask.TaskStatus = "Started";
+                EmpTask.DateStarted = DateTime.Now;
+                db.Entry(EmpTask).State = EntityState.Modified;
+                db.SaveChanges();
+                return Json(new { message = "You Started This Task successfully, you now work in this task.", status = EmpTask.TaskStatus, startdate = EmpTask.DateStarted.ToString() });
+            }
+            return Json(new { message = "Something went wrong" });
+        }
+        public ActionResult UpdateTask(int TaskId, string TaskStats)
+        {
+
+            if (TaskId != null)
+            {
+                EmployeeTask EmpTask = db.EmployeeTasks.Find(TaskId);
+                EmpTask.TaskStatus = TaskStats;
+                EmpTask.DateUpdated = DateTime.Now;
+                db.Entry(EmpTask).State = EntityState.Modified;
+                db.SaveChanges();
+                return Json(new { message = "You Updated This Task successfully, you are now "+TaskStats+" this task.", status = EmpTask.TaskStatus, updatedate = EmpTask.DateUpdated.ToString() });
+            }
+            return Json(new { message = "Something went wrong" });
+        }
+
+
         protected override void Dispose(bool disposing)
         {
             if (disposing)

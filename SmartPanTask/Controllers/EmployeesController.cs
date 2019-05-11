@@ -127,7 +127,7 @@ namespace SmartPanTask.Controllers
                 employee.UserId = userid;
                 db.Employees.Add(employee);
                 db.SaveChanges();
-                return RedirectToAction("Index");
+                return Redirect("~/Home/Index");
             }
 
             ViewBag.UserId = new SelectList(db.AspNetUsers, "Id", "Email", employee.UserId);
