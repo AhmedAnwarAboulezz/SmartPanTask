@@ -100,6 +100,8 @@
     <script type="text/javascript" src="~/Content/Login/js/switcher.min.js"></script>
     <!-- particles  -->
     <script src="~/Content/Login/js/particles.js"></script>
+    <link href="~/Scripts/toastr/toastr.css" rel="stylesheet" />
+    <script src="~/Scripts/toastr/toastr.min.js"></script>
     <script>
     particlesJS('particles-js',
 
@@ -231,3 +233,9 @@
 </body>
 </html>
 
+@if (TempData["failed"] == "You have been removed by the system, Conact with them or Register a new Acoount")
+{
+    <script>
+        toastr.warning("You have been removed by the system, Conact with them or Register a new Acoount");
+    </script>
+}

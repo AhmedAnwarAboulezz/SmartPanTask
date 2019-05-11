@@ -76,7 +76,7 @@ namespace SmartPanTask.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "Id,TaskTitle,TaskDescription,EmployeeID,DateAssigned")] EmployeeTask employeeTask)
+        public ActionResult Edit(EmployeeTask employeeTask)
         {
             if (ModelState.IsValid)
             {

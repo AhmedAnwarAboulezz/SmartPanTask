@@ -1,16 +1,32 @@
-﻿using System;
+﻿using Microsoft.AspNet.Identity;
+using SmartPanTask.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using System.Web.Security;
 
 namespace SmartPanTask.Controllers
 {
     [Authorize]
     public class HomeController : Controller
     {
+        private SmartPanEntities db = new SmartPanEntities();
         public ActionResult Index()
         {
+            if (User.IsInRole("EmployeeRole"))
+            {
+                var userid = User.Identity.GetUserId();
+                var employeeid = db.Employees.Where(a => a.UserId == userid).Count();
+                if (employeeid == 0)
+                {
+                    FormsAuthentication.SignOut();
+                    TempData["failed"] = "You have been removed by the system, Conact with them or Register a new Acoount";
+                    return Redirect("~/Account/Login");
+                }
+            }
+
             return View();
         }
 

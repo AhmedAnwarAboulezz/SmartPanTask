@@ -21,6 +21,11 @@ namespace SmartPanTask.Controllers
         {
             var userid = User.Identity.GetUserId();
             var employeeid = db.Employees.Where(a => a.UserId == userid).FirstOrDefault().Id;
+            //if(employeeid == null)
+            //{
+            //    TempData["failed"] = "You have been removed by the system, Conact with them or Register a new Acoount";
+            //    return Redirect("~/Account/Login");
+            //}
             var employeeTasks = db.EmployeeTasks.Include(e => e.Employee).Where(a => a.Employee.Id == employeeid);
             return View(employeeTasks.ToList());
         }
