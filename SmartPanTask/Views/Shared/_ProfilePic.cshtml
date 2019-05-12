@@ -11,12 +11,22 @@
     }
     else
     {
-        ViewBag.photo = db.Employees.Where(a => a.UserId == userid).FirstOrDefault().Image;
-        if(ViewBag.photo == null)
+        var count = db.Employees.Where(a => a.UserId == userid).Count();
+        if(count != 0)
+        {
+            ViewBag.photo = db.Employees.Where(a => a.UserId == userid).FirstOrDefault().Image;
+            if (ViewBag.photo == null)
+            {
+                ViewBag.photo = "Content/Adminicon.jpg";
+            }
+            ViewBag.Name = db.Employees.Where(a => a.UserId == userid).FirstOrDefault().FirstName;
+        }
+        else
         {
             ViewBag.photo = "Content/Adminicon.jpg";
+            ViewBag.Name = User.Identity.GetUserName();
         }
-        ViewBag.Name = db.Employees.Where(a => a.UserId == userid).FirstOrDefault().FirstName;
+
     }
 }
 <style>

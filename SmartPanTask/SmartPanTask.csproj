@@ -1275,6 +1275,7 @@
     <Content Include="Views\MyTasks\Edit.cshtml" />
     <Content Include="Views\MyTasks\Index.cshtml" />
     <Content Include="Views\Shared\_ProfilePic.cshtml" />
+    <Content Include="SmartPanTask.pdf" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
