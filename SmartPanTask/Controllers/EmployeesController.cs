@@ -54,20 +54,7 @@ namespace SmartPanTask.Controllers
             return View(employers);
         }
 
-        // GET: employers/Details/5
-        public ActionResult Details(int? id)
-        {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            Employee employee = db.Employees.Find(id);
-            if (employee == null)
-            {
-                return HttpNotFound();
-            }
-            return View(employee);
-        }
+
         [Authorize]
         // GET: Employees/Create
         public ActionResult Create()
@@ -191,6 +178,12 @@ namespace SmartPanTask.Controllers
         public ActionResult DeleteConfirmed(int id)
         {
             Employee employee = db.Employees.Find(id);
+            var imagepath = employee.Image;
+            string fullPath = Request.MapPath("~/" + imagepath);
+            if (System.IO.File.Exists(fullPath))
+            {
+                System.IO.File.Delete(fullPath);
+            }
             db.Employees.Remove(employee);
             db.SaveChanges();
             return RedirectToAction("Index");

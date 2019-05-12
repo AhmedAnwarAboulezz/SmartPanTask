@@ -9,9 +9,6 @@
     <link href="~/Content/Admin/css/bootstrap.min.css" rel="stylesheet">
     <link href="~/Content/Admin/font-awesome/css/font-awesome.css" rel="stylesheet">
 
-    <!-- Toastr style -->
-    <link href="~/Content/Admin/css/plugins/toastr/toastr.min.css" rel="stylesheet">
-
     <!-- Gritter -->
     <link href="~/Content/Admin/js/plugins/gritter/jquery.gritter.css" rel="stylesheet">
 
@@ -34,7 +31,6 @@
     </style>
     <link rel="stylesheet" href="https://cdn.datatables.net/1.10.16/css/dataTables.bootstrap.min.css" />
     <link rel="stylesheet" href="https://cdn.datatables.net/colreorder/1.4.1/css/colReorder.dataTables.min.css" />
-    <script src="~/Scripts/ckeditor/ckeditor.js"></script>
     <script src="https://cdn.datatables.net/1.10.16/js/jquery.dataTables.min.js"></script>
     <script src="https://cdn.datatables.net/1.10.16/js/dataTables.bootstrap.min.js"></script>
     <script src="https://cdn.datatables.net/buttons/1.5.1/js/dataTables.buttons.min.js"></script>
@@ -245,6 +241,7 @@
                                 <a data-toggle="dropdown" class="dropdown-toggle" href="#">
                                     <span class="clear">
                                         <span class="block m-t-xs">
+                                            @Html.Partial("_ProfilePic")
                                             <strong class="font-bold"><span>@User.Identity.Name</span></strong>
                                         </span>
                                     </span>
@@ -308,9 +305,6 @@
                                 <a href="javascript:document.getElementById('logoutForm').submit()" class="btn btn-primary loginbtn">Logout</a>
                             }
                         </section>
-                        @*<section class="Reslanglogin">
-                            <a href="~/VisitorMessages" class="btn btn-primary btn-circle">M</a>
-                        </section>*@
 
 
                     </nav>
@@ -409,12 +403,6 @@
             });
 
         });
-    </script>
-
-    <script>
-
-        CKEDITOR.replace("FullDescription");
-        CKEDITOR.replace("FullDescriptionAr");
     </script>
 
 </body>

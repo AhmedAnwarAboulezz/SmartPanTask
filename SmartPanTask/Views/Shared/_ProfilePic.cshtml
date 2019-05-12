@@ -1,0 +1,32 @@
+﻿@using SmartPanTask.Models
+@using Microsoft.AspNet.Identity;
+
+@{
+    SmartPanEntities db = new SmartPanEntities();
+    var userid = User.Identity.GetUserId();
+    if (User.IsInRole("AdminRole"))
+    {
+        ViewBag.photo = "Content/Adminicon.jpg";
+        ViewBag.Name = "Admin";
+    }
+    else
+    {
+        ViewBag.photo = db.Employees.Where(a => a.UserId == userid).FirstOrDefault().Image;
+        if(ViewBag.photo == null)
+        {
+            ViewBag.photo = "Content/Adminicon.jpg";
+        }
+        ViewBag.Name = db.Employees.Where(a => a.UserId == userid).FirstOrDefault().FirstName;
+    }
+}
+<style>
+    .imgs-circle {
+        width: 68px;
+        height: 68px;
+        border: 2px solid #2f4050;
+        border-radius: 47%;
+    }
+</style>
+<section class="text-center">       
+       <img class="imgs-circle" src="~/@ViewBag.photo" alt="@ViewBag.Name" />
+</section>
